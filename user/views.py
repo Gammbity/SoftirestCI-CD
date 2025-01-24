@@ -39,15 +39,20 @@ class LoginView(generics.CreateAPIView):
     serializer_class = serializers.LoginSerializer
 
     def post(self, request, *args, **kwargs):
-        username = request.data.get('username')
-        password = request.data.get('password')
-        user = authenticate(username=username, password=password)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        data = serializer.validated_data
+        user = authenticate(username=data['username'], password=data['password'])
         if user:
             login(request, user)
-            user.save()
-            return Response({"message": "Foydalanuvchi tizimga kirishi muvaffaqiyatli amalga oshirildi"}, status=status.HTTP_200_OK)
+            if user.is_authenticated:
+                response = set_token(user, 200)
+                return response
+            else:
+                raise AuthenticationFailed(status=status.HTTP_401_UNAUTHORIZED)
         else:
-            return Response({"message": "Username yoki parol noto'g'ri"}, status=400)
+            raise AuthenticationFailed("Username yoki parol noto‘g‘ri.", status=status.HTTP_400_BAD_REQUEST)
 
 class LogoutView(generics.CreateAPIView):
     queryset = User.objects.all()
