@@ -62,3 +62,9 @@ class LogoutView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         logout(request)
         return Response({"message": "Foydalanuvchi tizimdan muvaffaqiyatli chiqarildi"}, status=status.HTTP_200_OK)
+    
+class ProfileView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = serializers.ProfileSerializer
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'pk'
