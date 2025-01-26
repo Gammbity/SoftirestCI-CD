@@ -12,9 +12,9 @@ class Category(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def create(self):
+    def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
-        super().save()
+        super(Category, self).save(*args, **kwargs)
 
     def __str__(self):  
         return self.name
@@ -33,9 +33,9 @@ class Image(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def create(self):
+    def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-        super().save()
+        super(Image, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
