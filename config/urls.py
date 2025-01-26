@@ -39,6 +39,7 @@ urlpatterns = [
 
     #app
     path('api/v1/user/', include('user.urls')),
+    path('api/v1/image/', include('image.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

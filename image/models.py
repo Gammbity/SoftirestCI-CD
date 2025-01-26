@@ -1,12 +1,20 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 import datetime
+from django.utils.text import slugify
 
 year = datetime.datetime.now().date().year
 month = datetime.datetime.now().date().month
 
 class Category(models.Model):
-    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=300, unique=True)
+    name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def create(self):
+        self.slug = slugify(self.name)
+        super().save()
 
     def __str__(self):  
         return self.name
@@ -16,11 +24,18 @@ class Category(models.Model):
         verbose_name_plural = "Kategoriyalar"
 
 class Image(models.Model):
+    slug = models.SlugField(max_length=300, unique=True)
     img = models.ImageField(upload_to=f"images/{year}/{month}/")
     user = models.ForeignKey('user.User', on_delete=models.CASCADE, related_name='images', default=1)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='images')
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=255)
     description = RichTextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def create(self):
+        self.slug = slugify(self.title)
+        super().save()
 
     def __str__(self):
         return self.title
