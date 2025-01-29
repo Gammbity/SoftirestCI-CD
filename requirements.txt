@@ -8,6 +8,7 @@ django-js-asset==3.0.1
 djangorestframework==3.15.2
 djangorestframework_simplejwt==5.4.0
 drf-yasg==1.21.7
+gunicorn==23.0.0
 inflection==0.5.1
 packaging==24.2
 pillow==11.1.0

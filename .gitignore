@@ -171,4 +171,5 @@ cython_debug/
 .pypirc
 media/
 static/
-uploads/
+uploads/.terraform/
+.terraform/

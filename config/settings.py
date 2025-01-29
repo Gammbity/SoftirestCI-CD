@@ -83,15 +83,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': env("DB_NAME"),
         'USER': env("DB_USER"),
         'PASSWORD': env("DB_PASSWORD"),
-        'HOST': env("DB_HOST"),
-        'PORT': env("DB_PORT")
+        'HOST': "my-django-rds.cbuoye48w8ik.ap-south-1.rds.amazonaws.com",
+        'PORT': '5432',
     }
 }
 
@@ -175,10 +174,10 @@ REDIS_PORT = 6379
 REDIS_DB = 0
 
 
-try:
-    from config.localsettings import *
-except ImportError:
-    pass
+# try:
+#     from config.localsettings import *
+# except ImportError:
+#     pass
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # Set the token expiration time

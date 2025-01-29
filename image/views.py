@@ -20,8 +20,8 @@ class ImageCreateView(generics.CreateAPIView):
 class RetrieveImageView(generics.RetrieveAPIView):
     queryset = models.Image.objects.all()
     serializer_class = serializers.ImageRetrieveSerializer
-    lookup_field = 'pk'
+    lookup_field = 'slug'
 
 
-class ImageUpload(generics.RetrieveAPIView):
+class ImageUpload(APIView):
     permission_classes = [permissions.IsAuthenticated]
